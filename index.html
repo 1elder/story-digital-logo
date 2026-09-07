@@ -19,12 +19,11 @@
   .wrap{max-width:1000px; margin:0 auto; padding:0 26px}
   a{color:inherit}
 
-  /* header */
   header{padding:72px 0 34px; border-bottom:1px solid var(--line)}
   .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--amber)}
   header h1{font-family:var(--serif); font-weight:400; font-size:clamp(34px,5.6vw,56px); line-height:1.05; margin:14px 0 12px; text-wrap:balance}
   header h1 em{font-style:italic}
-  header p{color:var(--soft); max-width:60ch; font-size:16.5px}
+  header p{color:var(--soft); max-width:62ch; font-size:16.5px}
 
   .dir{padding:64px 0; border-bottom:1px solid var(--line)}
   .dir-head{display:flex; align-items:baseline; gap:16px; margin-bottom:8px}
@@ -35,75 +34,60 @@
   .stage{background:radial-gradient(120% 140% at 50% 0%, var(--panel2), var(--panel)); border:1px solid var(--line); border-radius:18px; min-height:250px; display:flex; align-items:center; justify-content:center; padding:56px 28px; cursor:pointer; position:relative}
   .stage .replay{position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
   .proofs{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px}
+  .chip-wrap{position:relative}
+  .chip-wrap .cap{position:absolute; top:10px; left:14px; z-index:2; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
   .chip{border:1px solid var(--line); border-radius:14px; min-height:120px; display:flex; align-items:center; justify-content:center; padding:22px}
   .chip.light{background:#EFE8DB}
-  .chip .cap{position:absolute}
-  .chip-wrap{position:relative}
-  .chip-wrap .cap{position:absolute; top:10px; left:14px; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
-  .chip.light + .cap, .chip .cap{}
 
-  /* ============ LOGO 01 — THROUGHLINE ============ */
+  /* shared effects */
+  .story-flip{perspective:780px; opacity:1}
+  .story-flip .ch{display:inline-block; transform-origin:left center; will-change:transform,opacity}
+  .story-flip.flip .ch{animation:pageflip .58s cubic-bezier(.25,.85,.35,1) both}
+  @keyframes pageflip{0%{transform:rotateY(-102deg);opacity:0;filter:brightness(2.2)}55%{opacity:1}100%{transform:none;opacity:1;filter:none}}
+  .scramble .ch{display:inline-block; min-width:.6em; text-align:center}
+  .ch.cyc{color:var(--mtx)}
+
+  /* ===== 01 THROUGHLINE ===== */
   .l1{display:inline-flex; flex-direction:column; align-items:flex-start; --c-ink:var(--cream); --c-sub:var(--soft)}
   .l1 .word{font-family:var(--serif); font-style:italic; font-weight:400; font-size:64px; line-height:.9; color:var(--c-ink); letter-spacing:.01em}
   .l1 svg{display:block; width:100%; height:16px; margin:2px 0 4px; overflow:visible}
-  .l1 .digital{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.52em; text-transform:uppercase; color:var(--c-sub); padding-left:3px}
-  .l1 .thread{stroke:var(--amber); stroke-width:2; fill:none; stroke-linecap:round}
-  .l1 .dot{fill:var(--amber)}
-  /* animation */
-  .l1 .thread{stroke-dasharray:220; stroke-dashoffset:220}
-  .l1 .dot{opacity:0}
-  .l1 .word,.l1 .digital{opacity:0; transform:translateY(8px)}
-  .play .l1 .dot{animation:dotIn .35s ease forwards}
-  .play .l1 .thread{animation:draw 1s ease .25s forwards}
-  .play .l1 .word{animation:rise .7s cubic-bezier(.2,.7,.2,1) .35s forwards}
-  .play .l1 .digital:not(.scramble){animation:rise .7s cubic-bezier(.2,.7,.2,1) 1.05s forwards}
-  .l1 .digital.scramble{opacity:1; transform:none; color:var(--amber)}
-  .l1 .digital .ch{display:inline-block; min-width:.62em; text-align:center}
-  .l1 .digital .ch.cyc{color:var(--mtx)}
+  .l1 .digital{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.5em; text-transform:uppercase; color:var(--amber); padding-left:3px}
+  .l1 .thread{stroke:var(--amber); stroke-width:2; fill:none; stroke-linecap:round; stroke-dasharray:220; stroke-dashoffset:220}
+  .l1 .dot{fill:var(--amber); opacity:0}
+  .play .l1 .dot{animation:dotIn .35s ease .1s forwards}
+  .play .l1 .thread{animation:draw 1s ease .3s forwards}
 
-  /* ============ LOGO 02 — STILL WRITING ============ */
-  .l2{display:inline-flex; align-items:baseline; font-family:var(--sans); font-size:46px; --c-ink:var(--cream); --c-sub:var(--amber)}
-  .l2 .type{overflow:hidden; white-space:nowrap; display:inline-block; border-right:0}
+  /* ===== 02 STILL WRITING ===== */
+  .l2{display:inline-flex; align-items:baseline; font-family:var(--sans); font-size:46px; --c-ink:var(--cream)}
   .l2 .s{font-weight:600; color:var(--c-ink); letter-spacing:-.015em}
-  .l2 .d{font-weight:300; color:var(--c-sub); letter-spacing:-.015em}
-  .l2 .cur{display:inline-block; width:4px; height:.92em; background:var(--amber); margin-left:6px; transform:translateY(.06em)}
-  /* animation: type reveal then blink */
-  .l2 .type{max-width:0}
-  .l2 .cur{opacity:0}
-  .play .l2 .type{animation:type 1.15s steps(24,end) .2s forwards}
-  .play .l2 .cur{animation:appear .01s linear 1.35s forwards, blink 1s steps(1) 1.4s infinite}
+  .l2 .d{font-weight:300; color:var(--amber); letter-spacing:-.015em; margin-left:.28em}
+  .l2 .cur{display:inline-block; width:4px; height:.9em; background:var(--amber); margin-left:8px; transform:translateY(.05em); opacity:0}
+  .l2 .cur.live{opacity:1; animation:blink 1s steps(1) 1.4s infinite}
 
-  /* ============ LOGO 03 — ONE LINE ============ */
+  /* ===== 03 ONE LINE ===== */
   .l3{display:inline-flex; flex-direction:column; align-items:center; gap:16px; --c-ink:var(--cream)}
-  .l3 svg{width:96px; height:96px; overflow:visible}
-  .l3 .s-path{stroke:var(--amber); stroke-width:9; fill:none; stroke-linecap:round; stroke-linejoin:round}
-  .l3 .ring{stroke:var(--line2); stroke-width:1.5; fill:none}
-  .l3 .lock{font-family:var(--mono); font-size:13px; letter-spacing:.42em; text-transform:uppercase; color:var(--c-ink)}
+  .l3 svg.mono{width:96px; height:96px; overflow:visible}
+  .l3 .s-path{stroke:var(--amber); stroke-width:9; fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:230; stroke-dashoffset:230}
+  .l3 .ring{stroke:var(--line2); stroke-width:1.5; fill:none; opacity:0}
+  .l3 .lock{font-family:var(--mono); font-size:13px; letter-spacing:.42em; text-transform:uppercase; color:var(--c-ink); opacity:1}
   .l3 .lock b{color:var(--amber); font-weight:400}
-  .l3 .s-path{stroke-dasharray:230; stroke-dashoffset:230}
-  .l3 .ring{opacity:0}
-  .l3 .lock{opacity:0; letter-spacing:.7em; transition:none}
   .play .l3 .s-path{animation:draw2 1.1s cubic-bezier(.5,0,.3,1) .2s forwards}
   .play .l3 .ring{animation:appear .6s ease 1.1s forwards}
-  .play .l3 .lock{animation:track 1s ease 1s forwards}
 
   @keyframes draw{to{stroke-dashoffset:0}}
   @keyframes draw2{to{stroke-dashoffset:0}}
   @keyframes dotIn{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
-  @keyframes rise{to{opacity:1;transform:none}}
-  @keyframes type{to{max-width:12ch}}
   @keyframes appear{to{opacity:1}}
   @keyframes blink{50%{opacity:0}}
-  @keyframes track{from{opacity:0;letter-spacing:.7em}to{opacity:1;letter-spacing:.42em}}
 
   .foot{padding:56px 0 80px}
-  .foot p{color:var(--soft); max-width:64ch}
+  .foot p{color:var(--soft); max-width:66ch}
   .foot .note{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:14px; letter-spacing:.04em}
 
   @media (prefers-reduced-motion: reduce){
     .l1 .thread,.l3 .s-path{stroke-dashoffset:0!important;animation:none!important}
-    .l1 .dot,.l1 .word,.l1 .digital,.l2 .cur,.l3 .ring,.l3 .lock{opacity:1!important;transform:none!important;animation:none!important}
-    .l2 .type{max-width:12ch!important;animation:none!important}
+    .l1 .dot,.l3 .ring{opacity:1!important;animation:none!important}
+    .story-flip.flip .ch{animation:none!important}
   }
   @media(max-width:720px){ .proofs{grid-template-columns:1fr} .l1 .word{font-size:52px} .l2{font-size:34px} }
 </style>
@@ -113,8 +97,8 @@
 <header>
   <div class="wrap">
     <div class="eyebrow">Story Digital · Identity Directions</div>
-    <h1>Three ways to make <em>Story</em> move,<br>and <em>Digital</em> land.</h1>
-    <p>The name holds a tension worth using: <b>Story</b> is human, narrative, unhurried — <b>Digital</b> is precise and modern. Each direction below is that idea, executed a different way. Tap any logo to replay its motion; the animation settles onto the final mark, so your pick doubles as the sign-off at the end of your videos.</p>
+    <h1>Three ways to make <em>Story</em> turn,<br>and <em>Digital</em> decode.</h1>
+    <p>Same idea across all three now, so you're judging the <b>composition</b>: <b>Story</b> forms letter-by-letter like pages of a book flipping into place, then <b>Digital</b> decrypts in Matrix-style — green code resolving to your brand color. Tap any logo to replay. The motion settles onto the final mark, so your pick is also your video sign-off.</p>
   </div>
 </header>
 
@@ -122,17 +106,17 @@
 <section class="dir" id="d1">
   <div class="wrap">
     <div class="dir-head"><span class="dir-no">01</span><span class="dir-name">The Throughline</span></div>
-    <p class="dir-why">A story is a throughline — one thread you follow from the first line to the last. Here it literally runs beneath the word and lifts forward at the end. Editorial serif for the human half; a spaced monospace "DIGITAL" for the precise half.</p>
+    <p class="dir-why">Editorial serif for the human half, a fine amber thread that runs beneath and lifts forward, and a spaced monospace "DIGITAL." The pages flip "Story" into being; the thread draws its throughline; "DIGITAL" decodes.</p>
     <div class="stage" data-anim><span class="replay">tap to replay</span>
       <div class="l1">
-        <div class="word">Story</div>
+        <div class="word story-flip" data-text="Story">Story</div>
         <svg viewBox="0 0 240 16" preserveAspectRatio="none"><circle class="dot" cx="4" cy="11" r="3.4"/><path class="thread" d="M4 11 H196 q10 0 14 -7"/></svg>
         <div class="digital scramble" data-final="Digital">Digital</div>
       </div>
     </div>
     <div class="proofs">
-      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l1" style="--c-ink:#17140F;--c-sub:#5C5346"><div class="word">Story</div><svg viewBox="0 0 240 16" preserveAspectRatio="none"><circle class="dot" cx="4" cy="11" r="3.4" style="opacity:1"/><path class="thread" d="M4 11 H196 q10 0 14 -7" style="stroke-dashoffset:0"/></svg><div class="digital" style="opacity:1;transform:none">Digital</div></div></div></div>
-      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l1" style="--c-ink:var(--cream);--c-sub:var(--cream)"><div class="word">Story</div><svg viewBox="0 0 240 16" preserveAspectRatio="none"><path class="thread" d="M4 11 H196 q10 0 14 -7" style="stroke:var(--cream);stroke-dashoffset:0"/></svg><div class="digital" style="opacity:1;transform:none">Digital</div></div></div></div>
+      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l1" style="--c-ink:#17140F"><div class="word">Story</div><svg viewBox="0 0 240 16" preserveAspectRatio="none"><circle cx="4" cy="11" r="3.4" style="fill:#C07A16"/><path class="thread" d="M4 11 H196 q10 0 14 -7" style="stroke-dashoffset:0"/></svg><div class="digital" style="color:#C07A16">Digital</div></div></div></div>
+      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l1"><div class="word">Story</div><svg viewBox="0 0 240 16" preserveAspectRatio="none"><path class="thread" d="M4 11 H196 q10 0 14 -7" style="stroke:var(--cream);stroke-dashoffset:0"/></svg><div class="digital" style="color:var(--cream)">Digital</div></div></div></div>
     </div>
   </div>
 </section>
@@ -141,13 +125,13 @@
 <section class="dir" id="d2">
   <div class="wrap">
     <div class="dir-head"><span class="dir-no">02</span><span class="dir-name">Still Writing</span></div>
-    <p class="dir-why">The most digital thing about a story today is that it's still being typed. The wordmark writes itself in, and the cursor keeps blinking — the story isn't finished, it's live. Clean modern grotesque; "Story" solid, "Digital" light.</p>
+    <p class="dir-why">A clean modern grotesque, tight and confident. "Story" flips in like turning pages, "Digital" decodes in light weight, and the cursor keeps blinking — the story's live and never quite finished.</p>
     <div class="stage" data-anim><span class="replay">tap to replay</span>
-      <div class="l2"><span class="type"><span class="s">Story&nbsp;</span><span class="d">Digital</span></span><span class="cur"></span></div>
+      <div class="l2"><span class="s story-flip" data-text="Story">Story</span><span class="d scramble" data-final="Digital">Digital</span><span class="cur live"></span></div>
     </div>
     <div class="proofs">
-      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l2" style="font-size:34px"><span class="type" style="max-width:12ch"><span class="s" style="color:#17140F">Story&nbsp;</span><span class="d" style="color:#C07A16">Digital</span></span><span class="cur" style="opacity:1"></span></div></div></div>
-      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l2" style="font-size:34px"><span class="type" style="max-width:12ch"><span class="s">Story&nbsp;</span><span class="d" style="color:var(--cream)">Digital</span></span><span class="cur" style="opacity:1;background:var(--cream)"></span></div></div></div>
+      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l2" style="font-size:34px"><span class="s" style="color:#17140F">Story</span><span class="d" style="color:#C07A16">Digital</span><span class="cur" style="opacity:1"></span></div></div></div>
+      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l2" style="font-size:34px"><span class="s">Story</span><span class="d" style="color:var(--cream)">Digital</span><span class="cur" style="opacity:1;background:var(--cream)"></span></div></div></div>
     </div>
   </div>
 </section>
@@ -156,15 +140,15 @@
 <section class="dir" id="d3">
   <div class="wrap">
     <div class="dir-head"><span class="dir-no">03</span><span class="dir-name">One Line</span></div>
-    <p class="dir-why">An "S" drawn as a single, unbroken stroke — one continuous line, like one story told start to finish. It's your avatar, app icon, and stamp, and it draws itself on in one motion. The wordmark locks up beneath it.</p>
+    <p class="dir-why">An "S" drawn as a single unbroken stroke — one continuous line, one story — for your avatar and app icon. Beneath it the wordmark: "Story" flips in, "Digital" decodes.</p>
     <div class="stage" data-anim><span class="replay">tap to replay</span>
       <div class="l3">
-        <svg viewBox="0 0 100 100"><circle class="ring" cx="50" cy="50" r="46"/><path class="s-path" d="M70 30 C70 18 34 18 34 34 C34 50 66 48 66 66 C66 84 30 82 30 70"/></svg>
-        <div class="lock">Story <b>Digital</b></div>
+        <svg class="mono" viewBox="0 0 100 100"><circle class="ring" cx="50" cy="50" r="46"/><path class="s-path" d="M70 30 C70 18 34 18 34 34 C34 50 66 48 66 66 C66 84 30 82 30 70"/></svg>
+        <div class="lock"><span class="story-flip" data-text="Story">Story</span> <b class="scramble" data-final="Digital">Digital</b></div>
       </div>
     </div>
     <div class="proofs">
-      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l3"><svg viewBox="0 0 100 100" style="width:72px;height:72px"><circle cx="50" cy="50" r="46" style="stroke:rgba(0,0,0,.14);stroke-width:1.5;fill:none"/><path class="s-path" d="M70 30 C70 18 34 18 34 34 C34 50 66 48 66 66 C66 84 30 82 30 70" style="stroke:#C07A16;stroke-dashoffset:0"/></svg><div class="lock" style="opacity:1;letter-spacing:.42em;color:#17140F">Story <b style="color:#C07A16">Digital</b></div></div></div></div>
+      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l3"><svg class="mono" viewBox="0 0 100 100" style="width:72px;height:72px"><circle cx="50" cy="50" r="46" style="stroke:rgba(0,0,0,.14);stroke-width:1.5;fill:none"/><path d="M70 30 C70 18 34 18 34 34 C34 50 66 48 66 66 C66 84 30 82 30 70" style="stroke:#C07A16;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round"/></svg><div class="lock" style="color:#17140F">Story <b style="color:#C07A16">Digital</b></div></div></div></div>
       <div class="chip-wrap"><span class="cap">app icon</span><div class="chip" style="background:var(--amber)"><svg viewBox="0 0 100 100" style="width:66px;height:66px"><path d="M70 30 C70 18 34 18 34 34 C34 50 66 48 66 66 C66 84 30 82 30 70" style="stroke:#17140F;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round"/></svg></div></div>
     </div>
   </div>
@@ -172,8 +156,8 @@
 
 <div class="foot">
   <div class="wrap">
-    <p>Tap any mark to watch its motion again. Tell me which direction speaks to you — <b>01</b>, <b>02</b>, or <b>03</b> — and whether the <b>amber</b> is right or you want a different accent. I'll refine that one to final, hand off the files, and produce the animated version as a clean sign-off clip for the end of your videos.</p>
-    <p class="note">// concepts for review · not final · type &amp; motion get tightened on the direction you pick</p>
+    <p>Tap any mark to watch it again. Tell me which composition wins — <b>01</b>, <b>02</b>, or <b>03</b> — plus whether the <b>amber</b> is right (and if you want the decode to stay matrix-green or land on the brand color). I'll refine that one to final, hand off the files, and render the animation as a clean sign-off clip for the end of your videos.</p>
+    <p class="note">// concepts for review · not final · type, timing &amp; motion get tightened on the winner</p>
   </div>
 </div>
 
@@ -183,7 +167,7 @@
   function scrambleEl(el){
     var finalText=(el.dataset.final||el.textContent).toUpperCase();
     el.innerHTML='';
-    var spans=[].map.call(finalText,function(ch){var s=document.createElement('span');s.className='ch';s.textContent='';el.appendChild(s);return s;});
+    var spans=[].map.call(finalText,function(){var s=document.createElement('span');s.className='ch';s.textContent='';el.appendChild(s);return s;});
     if(reduce){spans.forEach(function(s,i){s.textContent=finalText[i]});return;}
     var start=performance.now();
     function frame(now){
@@ -198,10 +182,20 @@
     }
     requestAnimationFrame(frame);
   }
+  function flipEl(el){
+    var txt=el.dataset.text||el.textContent; el.dataset.text=txt;
+    el.classList.remove('flip'); el.innerHTML='';
+    [].forEach.call(txt,function(ch,i){
+      var s=document.createElement('span'); s.className='ch'; s.textContent=ch;
+      if(!reduce) s.style.animationDelay=(i*85)+'ms';
+      el.appendChild(s);
+    });
+    void el.offsetWidth; el.classList.add('flip');
+  }
   function runPlay(s){
     s.classList.remove('play'); void s.offsetWidth; s.classList.add('play');
-    var sc=s.querySelector('.scramble');
-    if(sc) setTimeout(function(){scrambleEl(sc);}, reduce?0:1000);
+    s.querySelectorAll('.story-flip').forEach(function(el){ setTimeout(function(){flipEl(el);}, reduce?0:120); });
+    s.querySelectorAll('.scramble').forEach(function(el){ setTimeout(function(){scrambleEl(el);}, reduce?0:1050); });
   }
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target); runPlay(e.target);}})},{threshold:.4});
   document.querySelectorAll('.stage[data-anim]').forEach(function(s){
