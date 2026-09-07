@@ -48,8 +48,9 @@
   .l1 .book-stage{position:relative; width:172px; height:82px}
   /* ~50 thin pages; each is a vertical slice of "Story" on its fore-edge */
   .l1 .pages{position:absolute; left:8px; bottom:2px; width:150px; height:80px; perspective:1000px}
-  .l1 .page{position:absolute; top:0; height:80px; overflow:hidden; transform-origin:50% 100%; transform:rotateX(90deg); backface-visibility:hidden; will-change:transform}
-  .l1 .page .g{position:absolute; bottom:16px; left:0; width:150px; font-family:var(--serif); font-style:italic; font-weight:400; font-size:58px; line-height:1; color:var(--c-ink); white-space:nowrap}
+  .l1 .page{position:absolute; top:0; height:80px; overflow:hidden; transform-origin:50% 100%; transform:rotateX(-92deg);
+     background:rgba(244,238,226,.15); box-shadow:1px 0 0 rgba(0,0,0,.22), 0 -1px 3px rgba(0,0,0,.35); will-change:transform,background-color}
+  .l1 .page .g{position:absolute; bottom:16px; left:0; width:150px; font-family:var(--serif); font-style:italic; font-weight:400; font-size:58px; line-height:1; color:var(--cream); white-space:nowrap; text-shadow:0 1px 2px rgba(0,0,0,.4)}
   .l1 .word{font-family:var(--serif); font-style:italic; font-weight:400; font-size:58px; line-height:.9; color:var(--c-ink)}
   .l1 svg{display:block; width:172px; height:16px; margin:0 0 4px; overflow:visible}
   .l1 .thread{stroke:var(--amber); stroke-width:2; fill:none; stroke-linecap:round; stroke-dasharray:230; stroke-dashoffset:230}
@@ -58,7 +59,7 @@
   /* play */
   .play .l1 .dot{animation:dotIn .3s ease .05s forwards}
   .play .l1 .thread{animation:draw 1s ease .1s forwards}
-  .play .l1 .page{animation:pageDown .4s cubic-bezier(.3,.7,.25,1) var(--d,0s) both}
+  .play .l1 .page{animation:pageDown .42s cubic-bezier(.3,.7,.25,1) var(--d,0s) both, sheetFade .5s ease calc(var(--d,0s) + 1.15s) forwards}
 
   /* ===================== 02 · STILL WRITING ===================== */
   .l2{display:inline-flex; align-items:baseline; font-family:var(--sans); font-size:46px; --c-ink:var(--cream)}
@@ -88,7 +89,8 @@
   @keyframes dotIn{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
   @keyframes appear{to{opacity:1}}
   @keyframes blink{50%{opacity:0}}
-  @keyframes pageDown{0%{transform:rotateX(90deg)}100%{transform:rotateX(0deg)}}
+  @keyframes pageDown{0%{transform:rotateX(-92deg)}100%{transform:rotateX(0deg)}}
+  @keyframes sheetFade{from{background-color:rgba(244,238,226,.15);box-shadow:1px 0 0 rgba(0,0,0,.22),0 -1px 3px rgba(0,0,0,.35)}to{background-color:transparent;box-shadow:none}}
   @keyframes pagesFade{to{opacity:0}}
   @keyframes storyRise{to{opacity:1;transform:none}}
   @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
