@@ -45,29 +45,20 @@
 
   /* ===================== 01 · THE BOOK ===================== */
   .l1{display:inline-flex; flex-direction:column; align-items:flex-start; --c-ink:var(--cream)}
-  .l1 .book-stage{position:relative; width:174px; height:76px}
-  .l1 .pages{position:absolute; left:8px; bottom:0; width:150px; height:64px}
-  /* each page hinges at the spine (left) and swings DOWN onto the back cover */
-  .l1 .page{position:absolute; left:0; bottom:0; width:148px; height:7px; border-radius:1px 3px 3px 1px;
-     background:linear-gradient(90deg,var(--paper2),var(--paper) 14%,var(--paper) 86%,var(--paper2));
-     box-shadow:0 1px 1px rgba(0,0,0,.4); transform-origin:left bottom; transform:rotate(-122deg); opacity:0}
-  .l1 .word{position:absolute; left:10px; bottom:12px; font-family:var(--serif); font-style:italic; font-weight:400;
-     font-size:60px; line-height:.9; color:var(--c-ink); letter-spacing:.01em; clip-path:inset(0 100% 0 0)}
-  .l1 svg{display:block; width:174px; height:16px; margin:0 0 4px; overflow:visible}
+  .l1 .book-stage{position:relative; width:172px; height:82px}
+  /* ~50 thin pages; each is a vertical slice of "Story" on its fore-edge */
+  .l1 .pages{position:absolute; left:8px; bottom:2px; width:150px; height:80px; perspective:1000px}
+  .l1 .page{position:absolute; top:0; height:80px; overflow:hidden; transform-origin:50% 100%; transform:rotateX(90deg); backface-visibility:hidden; will-change:transform}
+  .l1 .page .g{position:absolute; bottom:16px; left:0; width:150px; font-family:var(--serif); font-style:italic; font-weight:400; font-size:58px; line-height:1; color:var(--c-ink); white-space:nowrap}
+  .l1 .word{font-family:var(--serif); font-style:italic; font-weight:400; font-size:58px; line-height:.9; color:var(--c-ink)}
+  .l1 svg{display:block; width:172px; height:16px; margin:0 0 4px; overflow:visible}
   .l1 .thread{stroke:var(--amber); stroke-width:2; fill:none; stroke-linecap:round; stroke-dasharray:230; stroke-dashoffset:230}
   .l1 .dot{fill:var(--amber); opacity:0}
   .l1 .digital{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.5em; text-transform:uppercase; color:var(--amber); padding-left:4px}
   /* play */
   .play .l1 .dot{animation:dotIn .3s ease .05s forwards}
-  .play .l1 .thread{animation:draw 1s ease .12s forwards}
-  .play .l1 .page{animation:flipdown .52s cubic-bezier(.34,.68,.28,1) both}
-  .play .l1 .page:nth-child(1){animation-delay:.16s}
-  .play .l1 .page:nth-child(2){animation-delay:.29s}
-  .play .l1 .page:nth-child(3){animation-delay:.42s}
-  .play .l1 .page:nth-child(4){animation-delay:.55s}
-  .play .l1 .page:nth-child(5){animation-delay:.68s}
-  .play .l1 .page:nth-child(6){animation-delay:.81s}
-  .play .l1 .word{animation:wipe 1.05s cubic-bezier(.45,0,.2,1) .5s forwards}
+  .play .l1 .thread{animation:draw 1s ease .1s forwards}
+  .play .l1 .page{animation:pageDown .4s cubic-bezier(.3,.7,.25,1) var(--d,0s) both}
 
   /* ===================== 02 · STILL WRITING ===================== */
   .l2{display:inline-flex; align-items:baseline; font-family:var(--sans); font-size:46px; --c-ink:var(--cream)}
@@ -97,7 +88,7 @@
   @keyframes dotIn{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
   @keyframes appear{to{opacity:1}}
   @keyframes blink{50%{opacity:0}}
-  @keyframes flipdown{0%{transform:rotate(-122deg) translateY(0);opacity:0}22%{opacity:1}100%{transform:rotate(0deg) translateY(calc(var(--i,0) * -3px));opacity:1}}
+  @keyframes pageDown{0%{transform:rotateX(90deg)}100%{transform:rotateX(0deg)}}
   @keyframes pagesFade{to{opacity:0}}
   @keyframes storyRise{to{opacity:1;transform:none}}
   @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
@@ -110,7 +101,7 @@
   @media (prefers-reduced-motion: reduce){
     .l1 .thread,.l3 .s-path{stroke-dashoffset:0!important;animation:none!important}
     .l1 .dot,.l3 .ring,.l1 .word,.l2 .cur,.l2 .d,.l3 .lock .st,.l3 .lock b{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
-    .l1 .page{opacity:0!important}
+    .l1 .page{transform:none!important;animation:none!important}
   }
   @media(max-width:720px){ .proofs{grid-template-columns:1fr} .l1 .word{font-size:52px} .l2{font-size:34px} }
 </style>
@@ -133,19 +124,15 @@
     <div class="stage" data-anim><span class="replay">tap to replay</span>
       <div class="l1">
         <div class="book-stage">
-          <div class="pages">
-            <span class="page" style="--i:0"></span><span class="page" style="--i:1"></span><span class="page" style="--i:2"></span>
-            <span class="page" style="--i:3"></span><span class="page" style="--i:4"></span><span class="page" style="--i:5"></span>
-          </div>
-          <div class="word">Story</div>
+          <div class="pages" data-word="Story"></div>
         </div>
         <svg viewBox="0 0 172 16" preserveAspectRatio="none"><circle class="dot" cx="4" cy="11" r="3.4"/><path class="thread" d="M4 11 H150 q10 0 14 -7"/></svg>
         <div class="digital scramble" data-final="Digital">Digital</div>
       </div>
     </div>
     <div class="proofs">
-      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l1" style="--c-ink:#17140F"><div class="book-stage"><div class="word" style="clip-path:none">Story</div></div><svg viewBox="0 0 172 16" preserveAspectRatio="none"><circle cx="4" cy="11" r="3.4" style="fill:#C07A16"/><path class="thread" d="M4 11 H150 q10 0 14 -7" style="stroke-dashoffset:0"/></svg><div class="digital" style="color:#C07A16">Digital</div></div></div></div>
-      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l1"><div class="book-stage"><div class="word" style="clip-path:none">Story</div></div><svg viewBox="0 0 172 16" preserveAspectRatio="none"><path class="thread" d="M4 11 H150 q10 0 14 -7" style="stroke:var(--cream);stroke-dashoffset:0"/></svg><div class="digital" style="color:var(--cream)">Digital</div></div></div></div>
+      <div class="chip-wrap"><span class="cap">on light</span><div class="chip light"><div class="l1" style="--c-ink:#17140F"><div class="word">Story</div><svg viewBox="0 0 172 16" preserveAspectRatio="none"><circle cx="4" cy="11" r="3.4" style="fill:#C07A16"/><path class="thread" d="M4 11 H150 q10 0 14 -7" style="stroke-dashoffset:0"/></svg><div class="digital" style="color:#C07A16">Digital</div></div></div></div>
+      <div class="chip-wrap"><span class="cap">one color</span><div class="chip"><div class="l1"><div class="word">Story</div><svg viewBox="0 0 172 16" preserveAspectRatio="none"><path class="thread" d="M4 11 H150 q10 0 14 -7" style="stroke:var(--cream);stroke-dashoffset:0"/></svg><div class="digital" style="color:var(--cream)">Digital</div></div></div></div>
     </div>
   </div>
 </section>
@@ -193,6 +180,17 @@
 <script>
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var GLY="アカサタナハマヤラワ0123456789<>/*#$%".split('');
+  (function buildBooks(){
+    document.querySelectorAll('.l1 .pages[data-word]').forEach(function(p){
+      var w=p.dataset.word, N=50, sw=150/N, i;
+      for(i=0;i<N;i++){
+        var pg=document.createElement('span'); pg.className='page';
+        pg.style.left=(i*sw)+'px'; pg.style.width=(sw+0.4)+'px'; pg.style.setProperty('--d',(0.12+i*0.017).toFixed(3)+'s');
+        var g=document.createElement('span'); g.className='g'; g.textContent=w; g.style.left=(-i*sw)+'px';
+        pg.appendChild(g); p.appendChild(pg);
+      }
+    });
+  })();
   function scrambleEl(el){
     var finalText=(el.dataset.final||el.textContent).toUpperCase();
     el.innerHTML='';
